@@ -1,0 +1,26 @@
+{
+  "name": "contact-tracing",
+  "version": "1.0.0",
+  "description": "A community and privacy focused contact tracing webapp",
+  "main": "server.js",
+  "author": "Reino Muhl",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.6",
+    "@babel/node": "^7.8.7",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-stage-0": "^7.8.3",
+    "express": "^4.17.1",
+    "fs": "^0.0.1-security"
+  },
+  "scripts": {
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "babel-node start-server.js",
+    "client": "babel-node start-client.js"
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0"
+  }
+}
