@@ -1,0 +1,13 @@
+.container {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 800px;
+  /* justify-content: center;
+  justify-items: center; */
+}
+
+.container > div {
+  padding: 10px;
+  border: 3px solid black;
+}
