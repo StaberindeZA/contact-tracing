@@ -25,7 +25,7 @@ class Login extends React.Component {
       username: "PeterLogin",
       status: "Postive"
     });
-    this.setState({ toLanding: false });
+    this.setState({ toLanding: true });
     event.preventDefault();
   }
 
