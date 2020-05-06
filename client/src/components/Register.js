@@ -1,6 +1,9 @@
 import React from 'react';
 
-class Login extends React.Component {
+// Register page
+// Used to register a new user to the application.
+
+class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -33,4 +36,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default Register;

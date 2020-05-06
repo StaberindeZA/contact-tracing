@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Register Contact
+// For a logged in user, register a person they've been in contact with.
+
 const RegisterContactDisplay = (props) => {
   return (
     <div>

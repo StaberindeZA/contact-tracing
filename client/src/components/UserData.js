@@ -2,6 +2,11 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 
+import userdataStyles from '../styles/userdata.module.css';
+
+// User Data
+// Show data of the currently logged in user.
+
 const UserDataDisplay = (props) => {
   return (
     <div>
@@ -12,19 +17,19 @@ const UserDataDisplay = (props) => {
             <span id="spanUser">{props.username}</span>
           </label>
         </div>
-        <div>
+        <div className={userdataStyles.container}>
           <label htmlFor="userCovidStatus">
             Covid Positive:
-            <div id="userCovidStatus">
-              <div>
-                <span style={{display: props.covidStatusDisplay}}>{props.covidStatus}</span>
-                <button onClick={props.onShowClick}>{props.showButtonText}</button>
-              </div>
-              <div>
-                <button>Update</button>
-              </div>
-            </div>
           </label>
+          <div className={userdataStyles.statusContainer} id="userCovidStatus">
+            <div>
+              <span style={{display: props.covidStatusDisplay}}>{props.covidStatus}</span>
+              <button onClick={props.onShowClick}>{props.showButtonText}</button>
+            </div>
+            <div>
+              <button>Update</button>
+            </div>
+          </div>
         </div>
       </div>
   )
@@ -45,7 +50,6 @@ class UserData extends React.Component {
   }
 
   handleShowClick = () => {
-    console.log(this.state);
     this.setState({
       covidStatusDisplay: this.state.covidStatusVisibility ? "inline" : "none",
       showButtonText: this.state.covidStatusVisibility ? "Hide" : "Show",
@@ -58,8 +62,6 @@ class UserData extends React.Component {
   }
 
   handleSubmit(event) {
-    //We want to navigate now.
-    console.log("Register Contact triggered");
     event.preventDefault();
   }
   
@@ -83,4 +85,3 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps)(UserData);
-// export default UserData;
