@@ -8,7 +8,7 @@ import { callLogin, callUser } from '../helpers/client';
 
 const LoginDisplay = ( props ) => {
   // If isAuthenticated is true, redirectToPage should be true.
-  if (props.redirectToPage === true) {
+  if (props.redirectToPage) {
     return <Redirect to="/main" />;
   }
   
