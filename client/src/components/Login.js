@@ -2,14 +2,39 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { addUser } from '../redux/actions';
+import { addUser, setAuth } from '../redux/actions';
+
+import { callLogin, callUser } from '../helpers/client';
+
+const LoginDisplay = ( props ) => {
+  // If isAuthenticated is true, redirectToPage should be true.
+  if (props.redirectToPage) {
+    return <Redirect to="/main" />;
+  }
+  
+  // Else return the Login page.
+  return (
+    <div>
+      <form onSubmit={props.handleSubmit}>
+        <label>
+          Username:
+          <input type="text" value={props.username} onChange={props.handleChange} />
+        </label>
+        <input type="submit" value="Login"/>
+      </form>
+      <hr />
+      <Link to="/register"><button>Register</button></Link>
+      <button onClick={props.authTest}>Auth Test</button>
+    </div>
+  )
+}
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      toLanding: false
+      username: 'Test User',
+      redirectToPage: false
     };
   }
 
@@ -17,41 +42,42 @@ class Login extends React.Component {
     this.setState({ username: event.target.value });
   }
 
-  handleSubmit = (event) => {
-    //We want to navigate now.
-    console.log("Submit triggered");
-    this.props.addUser({
-      userId: 987,
-      username: "PeterLogin",
-      status: "Postive"
-    });
-    this.setState({ toLanding: true });
+  handleSubmit = async (event) => {
     event.preventDefault();
+    //We want to navigate now.
+    
+    try {
+      const loginResults = await callLogin(this.state.username);
+      const { userObj, userResults } = await callUser(this.state.username);
+      
+      
+      if (loginResults.statusCode === 200 && userResults.statusCode === 200) {
+        this.props.addUser({
+          ...userObj
+        });
+
+        this.props.setAuth(true);
+      }
+    } catch (error) {
+      console.log("An error ocurred\n", error)
+    }
   }
 
   render() {
-    if (this.state.toLanding === true) {
-      return <Redirect to="/landing" />;
-    }
-
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Username:
-            <input type="text" value={this.state.username} onChange={this.handleChange} />
-          </label>
-          <input type="submit" value="Login"/>
-        </form>
-        <hr />
-        <Link to="/register"><button>Register</button></Link>
-      </div>
-    )
+      <LoginDisplay
+        redirectToPage={this.props.isAuthenticated}
+        username={this.state.username}
+        handleSubmit={this.handleSubmit}
+        handleChange={this.handleChange}
+        authTest={this.authTest}
+      />
+    );
   }
 }
 
 export default connect(
-  null,
-  { addUser }
+  (state) => state.auth,
+  { addUser, setAuth }
 )(Login);
 // export default Login;

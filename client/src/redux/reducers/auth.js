@@ -1,14 +1,14 @@
-import { ADD_USER } from '../actionTypes';
+import { SET_AUTH } from '../actionTypes';
 
 const initialState = {
-  userId: "123"
+  isAuthenticated: false
 }
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case ADD_USER: {
+    case SET_AUTH: {
       return {
-        ...action.payload
+        isAuthenticated: action.isAuthenticated
       }
     }
     default:

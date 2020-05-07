@@ -1,37 +1,33 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 import './App.css';
 
 import Login from './components/Login';
 import Register from './components/Register';
 import Landing from './components/Landing';
+import About from './components/About';
+import Main from './components/Main';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
 
-  const buttonSubmit = async () => {
-    const response = await fetch('http://localhost:3001/');
-    console.log(response);
-  }
-
   return (
     <div className="App">
-      <Router>
-        <Switch>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/register">
-            <Register />
-          </Route>
-          <Route path="/landing">
-            <Landing />
-          </Route>
-          <Route path="/">
-            <Login />
-          </Route>
-        </Switch>
-      </Router>
+      <Provider store={store}>
+        <Router>
+          <Switch>
+            <Route path="/about" component={About} />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+            <Route path="/landing" component={Landing} />
+            <PrivateRoute path="/main" component={Main} />
+            <PrivateRoute path="/" component={Main} />
+          </Switch>
+        </Router>
+      </Provider>
     </div>
   );
 }

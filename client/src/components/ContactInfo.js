@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Contact Information --- Needs a beter name.
+// Provide information about the people you've been in contact with and have registered contact with.
+
 const ContactInfoDisplay = (props) => {
   return (
     <div>
