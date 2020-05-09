@@ -11,6 +11,7 @@ import Landing from './components/Landing';
 import About from './components/About';
 import Main from './components/Main';
 import PrivateRoute from './components/PrivateRoute';
+import NavBar from './components/NavBar';
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
     <div className="App">
       <Provider store={store}>
         <Router>
+          <NavBar />
           <Switch>
             <Route path="/about" component={About} />
             <Route path="/login" component={Login} />
