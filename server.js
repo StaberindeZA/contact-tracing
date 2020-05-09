@@ -1,12 +1,28 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const graphqlHTTP = require('express-graphql');
+const { graphql } = require('graphql');
 // const fs = require('fs');
-// const sqlite = require('sql.js');
 
-// const filebuffer = fs.readFileSync('db/usda-nnd.sqlite3');
+const { schema, root } = require('./api/resolvers');
 
-// const db = new sqlite.Database(filebuffer);
+// Run the GraphQL query '{ test }' and print out the response
+// We can remove the 'test' query and this function call at any point - it's just for familiarization with GraphQL :)
+graphql(schema, '{ test }', root).then((response) => {
+  console.log(response);
+});
 
 const app = express();
+
+// To support parsing of json and x-www-form-urlencoded POST data in response bodies
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use('/graphql', graphqlHTTP({
+  schema: schema,
+  rootValue: root,
+  graphiql: true, // visit http://localhost:3001/graphql to use this tool
+}));
 
 app.set('port', (process.env.API_PORT || 3001));
 
@@ -22,4 +38,4 @@ app.get('/', (req, res) => {
   res.json({ body: "This is the body text" });
 });
 
-export default app;
+module.exports = app;
