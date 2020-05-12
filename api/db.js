@@ -1,7 +1,8 @@
 const Sequelize = require('sequelize');
 const { DataTypes } = require('sequelize');
+const { dburi } = require('../config');
 
-const databaseURI = 'postgres://localhost:5432/covid19_contact_tracing';
+const databaseURI = dburi;
 
 const db = new Sequelize(databaseURI, {
     logging: false
