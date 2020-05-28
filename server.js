@@ -1,16 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const graphqlHTTP = require('express-graphql');
-const { graphql } = require('graphql');
 // const fs = require('fs');
 
 const { schema, root } = require('./api/resolvers');
-
-// Run the GraphQL query '{ test }' and print out the response
-// We can remove the 'test' query and this function call at any point - it's just for familiarization with GraphQL :)
-graphql(schema, '{ test }', root).then((response) => {
-  console.log(response);
-});
 
 const app = express();
 

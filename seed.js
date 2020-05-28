@@ -3,7 +3,7 @@ const { db, User, UserContact } = require('./api/db');
 function generateUsers() {
   const users = [];
   users.push(User.build({
-    id: 'afe72253-34a6-406b-a28b-6d387860f1ef',
+    uuid: 'afe72253-34a6-406b-a28b-6d387860f1ef',
     username: 'RuthHill',
     active: true,
     covid19Positive: false,
@@ -11,7 +11,7 @@ function generateUsers() {
     updatedAt: Date.now(),
   }));
   users.push(User.build({
-    id: '7c80ff5e-6e26-4266-a5b4-0a6e6ff8576c',
+    uuid: '7c80ff5e-6e26-4266-a5b4-0a6e6ff8576c',
     username: 'ReinoMuhl',
     active: true,
     covid19Positive: false,
@@ -19,7 +19,7 @@ function generateUsers() {
     updatedAt: Date.now(),
   }));
   users.push(User.build({
-    id: 'f94a736c-1d51-4277-8b88-95950bbe6c55',
+    uuid: 'f94a736c-1d51-4277-8b88-95950bbe6c55',
     username: 'ChurchTheCat',
     active: true,
     covid19Positive: true,
@@ -37,22 +37,22 @@ function generateUserContacts(users) {
   const user2Id = '7c80ff5e-6e26-4266-a5b4-0a6e6ff8576c';
   const user3Id = 'f94a736c-1d51-4277-8b88-95950bbe6c55';
   userContacts.push(UserContact.build({
-    userId: user1Id,
-    contactId: user2Id,
+    userUuid: user1Id,
+    contactUuid: user2Id,
     contactFrequency: 3,
     createdAt: Date.now(),
     updatedAt: Date.now(),
   }));
   userContacts.push(UserContact.build({
-    userId: user1Id,
-    contactId: user3Id,
+    userUuid: user1Id,
+    contactUuid: user3Id,
     contactFrequency: 12,
     createdAt: Date.now(),
     updatedAt: Date.now(),
   }));
   userContacts.push(UserContact.build({
-    userId: user2Id,
-    contactId: user3Id,
+    userUuid: user2Id,
+    contactUuid: user3Id,
     contactFrequency: 1,
     createdAt: Date.now(),
     updatedAt: Date.now(),

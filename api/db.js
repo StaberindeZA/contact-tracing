@@ -10,9 +10,9 @@ const db = new Sequelize(databaseURI, {
 
 // updatedAt, createdAt - Auto-generated fields
 const User = db.define('user', {
-  id: {
+  uuid: {
     type: DataTypes.UUID,
-    defaultValue: Sequelize.UUIDV4,
+    defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
   },
   username: {

@@ -26,7 +26,6 @@ const schema = buildSchema(`
   }
 
   type Query {
-    test: String
     users: [User]
     getUserById(id: ID!): User!
     getUserByUsername(username: String!): User!
@@ -35,22 +34,26 @@ const schema = buildSchema(`
   }
 
   type Mutation {
-    createUser(username: String!, fingerprintId: String) : Boolean
-    updateUserInfo(id: ID!, active: Boolean, fingerprintId: String,) : Boolean
-    updateUserCovidStatus(id: ID!, covid19Positive: Boolean!, covid19PositiveDate: String) : Boolean
-    deleteUser(id: ID!) : Boolean
+    createUser(username: String!): String
+    updateUserActive(id: ID!, active: Boolean): Boolean
+    updateUserFingerprint(id: ID!, fingerprintId: String): String
+    updateUserCovidStatus(id: ID!, covid19Positive: Boolean!, covid19PositiveDate: String): Boolean
+    deleteUser(id: ID!): Boolean
   }
 `);
 
 // The root provides a resolver function for each API endpoint
 const root = {
-  test: () => "This is the correct response for a 'test' query.",
   users: () => User.findAll().then(users => users),
   getUserById: (args) => User.findByPk(args.id),
   getUserByUsername: (args) => User.findOne({where: {username: args.username}}),
-  getUserContacts: (args) => UserContact.findAll({where: {userId: args.userId}}).then(contacts => contacts),
-  getUserContactedBy: (args) => UserContact.findAll({where: {contactId: args.userId}}).then(contacts => contacts),
-  // createUser: (args) => User.create({username: args.username}).then(data => data)
+  getUserContacts: (args) => UserContact.findAll({where: {userUuid: args.userId}}).then(contacts => contacts),
+  getUserContactedBy: (args) => UserContact.findAll({where: {contactUuid: args.userId}}).then(contacts => contacts),
+  createUser: (args) => User.create({username: args.username, active: true}).then(data => data.uuid),
+  updateUserActive: (args) => User.update({active: args.active}, {where: {uuid: args.id}, returning: true}).then(data => data[1][0].active),
+  updateUserFingerprint: (args) => User.update({fingerprintId: args.fingerprintId}, {where: {uuid: args.id}, returning: true}).then(data => data[1][0].fingerprintId),
+  updateUserCovidStatus: (args) => User.update({covid19Positive: args.covid19Positive, covid19PositiveDate: args.covid19PositiveDate}, {where: {uuid: args.id}, returning: true}).then(data => data[1][0].covid19Positive),
+  deleteUser: (args) => User.destroy({where: {uuid: args.id}})  // use case: users could opt to be fully deleted after 2 weeks of being classified as inactive, as all records of contacts made would no longer be relevant/would themselves be deleted
 };
 
 
